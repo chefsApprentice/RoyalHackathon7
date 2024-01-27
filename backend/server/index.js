@@ -4,7 +4,7 @@ const fs = require("fs");
 // const multer = require("multer");
 // Creates the basic server
 const express = require("express");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const port = 3000;
@@ -28,9 +28,9 @@ app.get("/", (req, res) => {
 app.post("/img", (req, res) => {
   // console.log("req" + req)
   count++;
-  let name = FILES_DIR + count + ".png";
-  var data = req.body.image.replace(/^data:image\/\w+;base64,/, "");
-  var buf = Buffer.from(data, "base64");
+  const name = FILES_DIR + count + ".png";
+  const data = req.body.image.replace(/^data:image\/\w+;base64,/, "");
+  const buf = Buffer.from(data, "base64");
   fs.writeFileSync(name, buf /* callback will go here */);
   console.log("file saved");
 

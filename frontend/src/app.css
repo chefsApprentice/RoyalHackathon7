@@ -18,6 +18,6 @@ canvas, video {
     @apply rounded drop-shadow-2xl;
 }
 
-p {
+span, p {
     @apply dark:text-white;
 }
