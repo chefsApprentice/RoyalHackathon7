@@ -11,7 +11,7 @@ const port = 3000;
 // Python runner
 const { spawn } = require("child_process");
 
-// Middleware so taht we can
+// Middleware so taht we cant
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
