@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const port = 3000;
+// Python runner
+const { spawn } = require("child_process");
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -32,12 +34,24 @@ app.post("/img", (req, res) => {
   fs.writeFileSync(name, buf /* callback will go here */);
   console.log("file saved");
 
-// await fetch from python
+  // await fetch from python
+  const python = spawn("python", ["../model.py"]);
 
-  res.send({
-    up: 3,
-    down: 1
-  })
+  python.stdout.on("data", function (data) {
+    console.log("Pipe data from python script ...");
+    dataToSend = data.toString();
+  });
+  // in close event we are sure that stream from child process is closed
+  python.on("close", (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    // send data to browser
+    res.send(dataToSend);
+  });
+
+  //   res.send({
+  //     up: 3,
+  //     down: 1
+  //   })
 });
 
 app.listen(port, () => {
