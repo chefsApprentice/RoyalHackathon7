@@ -142,12 +142,12 @@
     {:then response}
       <div transition:fade class="flex font-bold text-3xl py-2">
         <span>I see</span>
-        <div class="text-green-600 bg-black/5 rounded px-1 pb-1 mx-2">
-          <span>{response.up}👍</span>
+        <div class="bg-black/5 rounded px-1 pb-1 mx-2">
+          <span class="text-green-600">{response.up}👍</span>
         </div>
         <span>and</span>
-        <div class="text-red-400 bg-black/5 rounded px-1 pb-1 mx-2">
-          <span>{response.down}👎</span>
+        <div class="bg-black/5 rounded px-1 pb-1 mx-2">
+          <span class="text-red-400">{response.down}👎</span>
         </div>
         <span>!</span>
       </div>
