@@ -1,10 +1,12 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
 
+  // Exports var so that main program updates
   export let isDone = false;
 
   let countDownNum: number | undefined;
 
+  // inits the countdown
   function timer(): null {
     isDone = false;
     if (countDownNum == undefined) countDownNum = 3;
@@ -12,6 +14,7 @@
     return null;
   }
 
+  // recursive loop for countdown
   let updateCount = () => {
     if (countDownNum! != 0) {
       countDownNum! -= 1;
@@ -25,7 +28,7 @@
 </script>
 
 <div>
-  <button on:click={() => timer()} class="bg-blue-400">
+  <button on:click={() => timer()} class="bg-green-400">
     Start countdown
   </button>
 

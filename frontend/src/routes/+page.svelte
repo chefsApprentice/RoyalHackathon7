@@ -15,22 +15,25 @@
     let formData = new FormData();
     formData.append("image", data);
 
+    // posts the data and creates that req as a var
     let response = await fetch("http://localhost:3000/img/", {
-      method: "POST", // GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, cors, same-origin
-      cache: "no-cache", // default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, same-origin, omit
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
-      redirect: "follow", // manual, follow, error
-      referrer: "no-referrer", // no-referrer, client
+      redirect: "follow",
+      referrer: "no-referrer",
       body: JSON.stringify({
         image: data,
       }),
     });
+    // var that qaits the req's response
     let dataRecieved = await response.json();
 
+    // Checks recieved data, updates data to match
     if (dataRecieved != undefined) {
       resRecieved = writable(true);
       console.log(dataRecieved);
@@ -80,6 +83,7 @@
     });
   });
 
+  // Defines res (the thumbs up score)
   let res = writable({ up: 0, down: 0 });
   let resRecieved = writable(false);
 
