@@ -1,13 +1,12 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import { writable, type Writable } from "svelte/store";
 
-  export let isDone: Writable<boolean> = writable(false);
+  export let isDone = false;
 
   let countDownNum: number | undefined;
 
   function timer(): null {
-    $isDone = false;
+    isDone = false;
     if (countDownNum == undefined) countDownNum = 3;
     setTimeout(updateCount, 1000);
     return null;
@@ -19,7 +18,7 @@
       setTimeout(updateCount, 1000);
     } else {
       countDownNum = undefined;
-      $isDone = true;
+      isDone = true;
       return;
     }
   };
