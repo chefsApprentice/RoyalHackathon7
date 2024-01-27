@@ -1,15 +1,8 @@
-from tensorflow.keras.models import load_model
-
-# Specify the complete file path including the filename
-model_path = r".\CNNRNN_Model2.h5"
-
-# Save the model
-CNNRNN_Model2.save(model_path)
-
 from PIL import Image
 import numpy as np
 from skimage.transform import resize
 from tensorflow.keras.models import load_model
+
 
 def predict_image(classifier, image):
     # Resize the image to the expected size (30x30x30) and convert it to RGB
@@ -27,12 +20,12 @@ def predict_image(classifier, image):
 
 
 # Load the image
-image = Image.open(r"C:\Users\Rahul\Desktop\Thumbs_up_and_down_Dataset\val\WIN_20180907_16_07_10_Pro_Thumbs Down_new\WIN_20180907_16_07_10_Pro_00034.png")
+image = Image.open(r".\Thumbs_up_and_down_Dataset\val\WIN_20180907_16_07_10_Pro_Thumbs Down_new\WIN_20180907_16_07_10_Pro_00034.png")
 # Convert the image to a NumPy array
 image_array = np.array(image)
 
 # Load the model
-imported_model = load_model(r"C:\Users\Rahul\Desktop\MODELS\CNNRNN_Model2.h5")
+imported_model = load_model(r".\CNNRNN_Model2.h5")
 
 # Now you can use the imported model
 predictor = predict_image(imported_model, image_array)
