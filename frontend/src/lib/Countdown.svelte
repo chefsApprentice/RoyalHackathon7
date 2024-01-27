@@ -13,7 +13,7 @@
     let updateCount = () => {
         if (countDownNum! != 0) { countDownNum! -= 1;  
         setTimeout(updateCount, 1000);  }
-        else { countDownNum = undefined; return;}
+        else { countDownNum = undefined; isDone = true; return;}
     }
 
 </script>
