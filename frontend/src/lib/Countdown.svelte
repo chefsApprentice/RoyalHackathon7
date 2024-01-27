@@ -1,12 +1,13 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
+  import { writable, type Writable } from "svelte/store";
 
-  export let isDone = false;
+  export let isDone: Writable<boolean> = writable(false);
 
   let countDownNum: number | undefined;
 
   function timer(): null {
-    isDone = false;
+    $isDone = false;
     if (countDownNum == undefined) countDownNum = 3;
     setTimeout(updateCount, 1000);
     return null;
@@ -18,7 +19,7 @@
       setTimeout(updateCount, 1000);
     } else {
       countDownNum = undefined;
-      isDone = true;
+      $isDone = true;
       return;
     }
   };
@@ -33,7 +34,7 @@
     <div transition:fade>
       <div
         id="countBubble"
-        class="m-10 p-5 bg-gray-300 w-min font-bold rounded-xl text-black text-5xl"
+        class="m-10 p-5 bg-gray-300/10 w-min font-bold rounded-xl text-black text-5xl"
       >
         <p>{countDownNum}</p>
       </div>

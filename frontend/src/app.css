@@ -17,3 +17,7 @@ button {
 canvas, video {
     @apply rounded drop-shadow-2xl;
 }
+
+p {
+    @apply dark:text-white;
+}
