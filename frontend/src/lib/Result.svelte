@@ -1,9 +1,20 @@
 <script lang="ts">
+import { onMount } from "svelte";
+
+  let tableData = [];
+
+  onMount(async () => {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    tableData = await res.json();
+    console.log(tableData);
+  });
 
 </script>
 
+
+
 <div>
-    <p>Red Text</p>
+    <p> </p>
 </div>
 
 <style>

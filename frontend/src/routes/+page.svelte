@@ -1,3 +1,4 @@
+    export let isDone = false; 
 <script lang="ts">
     import { onMount } from "svelte";
     import Result from "$lib/Result.svelte";
@@ -16,9 +17,9 @@
             .catch(err => console.error(err));
     })
 </script>
-
+ 
 <div>
-    <RedText/>
+    <Result/>
 </div>
 
 <video width={512} bind:this={videoElement}/>
