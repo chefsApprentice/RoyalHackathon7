@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    @apply h-full;
+}
+
+body {
+    @apply h-full bg-blue-200;
+}
+
 button {
     @apply bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors;
+}
+
+canvas, video {
+    @apply rounded drop-shadow-2xl;
 }

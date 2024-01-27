@@ -23,8 +23,6 @@
   });
 
   const takePicture = () => {
-    // do capture stuff
-
     const context = canvasElement.getContext("2d")!;
     context.drawImage(
       videoElement,
@@ -34,7 +32,10 @@
       canvasElement.height
     );
 
+    // We need to send this to the backend
     const data = canvasElement.toDataURL("image/png");
+
+    console.log("A Picture has been taken!");
     // photoElement.setAttribute("src", data)
   };
   let isDone = writable(false);
@@ -50,11 +51,22 @@
   <Result />
 </div>
 
-<!--<button on:click={takePicture}>Take Picture</button>-->
-<!--<img src="" alt="A picture of you!"/>-->
-<video width={256} height={500} bind:this={videoElement}>
-  <track kind="captions" src="" />
-</video>
-<canvas width={256} height={200} bind:this={canvasElement}></canvas>
+<div class="flex flex-col w-full h-full items-center justify-center">
+  <canvas
+    style:display={$isDone ? "block" : "none"}
+    width={512}
+    height={390}
+    bind:this={canvasElement}
+  ></canvas>
+  {#if $isDone === false}
+    <video width={512} bind:this={videoElement}>
+      <track kind="captions" src="" />
+    </video>
+    <br />
+    <Countdown bind:isDone={$isDone} />
+  {:else}
+    <p class="font-bold text-4xl p-2">Picture has been sent!</p>
+  {/if}
+</div>
 
 <Countdown bind:isDone={$isDone} />

@@ -1,24 +1,15 @@
 <script lang="ts">
-import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
   let tableData = [];
-
-  onMount(async () => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-    tableData = await res.json();
-    console.log(tableData);
-  });
-
 </script>
 
-
-
 <div>
-    <p> </p>
+  <p></p>
 </div>
 
 <style>
-    p {
-        color: red;
-    }
+  p {
+    color: red;
+  }
 </style>

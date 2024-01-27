@@ -23,7 +23,7 @@
 </script>
 
 <div>
-  <button on:click={() => timer()} class="bg-blue-300">
+  <button on:click={() => timer()} class="bg-blue-400">
     Start countdown
   </button>
 
