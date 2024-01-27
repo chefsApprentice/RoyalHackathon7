@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import RedText from "$lib/RedText.svelte";
+    import Result from "$lib/Result.svelte";
 
     console.log("Royal Hackaway");
 
