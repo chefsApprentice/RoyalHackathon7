@@ -117,6 +117,11 @@
 </script>
 
 <div class="flex flex-col w-full h-full items-center justify-center">
+  <div class="flex flex-col w-full mb-5 items-center justify-center">
+    <h1>Mass Polling System</h1>
+    <p>Get a group and put your thumbs up and down to vote!</p>
+  </div>
+
   <canvas
     style:display={$isDone ? "block" : "none"}
     width={512}

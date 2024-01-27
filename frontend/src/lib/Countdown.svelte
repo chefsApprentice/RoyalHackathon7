@@ -28,7 +28,7 @@
 </script>
 
 <div>
-  <button on:click={() => timer()} class="bg-green-400">
+  <button disabled={countDownNum != undefined} on:click={() => timer()}>
     Start countdown
   </button>
 
@@ -36,7 +36,7 @@
     <div transition:fade>
       <div
         id="countBubble"
-        class="m-10 p-5 bg-gray-300/10 w-min font-bold rounded-xl text-black text-5xl"
+        class="m-10 p-5 bg-gray-300/10 w-min font-bold rounded-xl text-black text-5xl r"
       >
         <p>{countDownNum}</p>
       </div>
