@@ -15,7 +15,7 @@
     let formData = new FormData();
     formData.append("image", data);
 
-    await fetch("http://localhost:3000/img/", {
+    let success = await fetch("http://localhost:3000/img/", {
       method: "POST", // GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, same-origin
       cache: "no-cache", // default, no-cache, reload, force-cache, only-if-cached
@@ -29,6 +29,14 @@
         image: data,
       }),
     });
+    let dataRecieved = await success.json();
+
+    if (dataRecieved != undefined) {
+      resRecieved = writable(true);
+      console.log(dataRecieved);
+      // let dataRecieved = JSON.stringify(success.body);
+      res = { up: 0, down: 0 };
+    }
   };
 
   // onMount basically means "start when the DOM is loaded"
@@ -72,7 +80,7 @@
     });
   });
 
-  let res = writable(0);
+  let res = writable({ up: 0, down: 0 });
   let resRecieved = writable(false);
 
   const takePicture = () => {
@@ -129,14 +137,14 @@
     <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
     <Result bind:resRecieved={$resRecieved} bind:res={$res} />
   {:else}
-    <div transition:fade class="flex font-bold text-3xl py-2">
+    <div transition:fade class="flex font-bold text-3xl py-5">
       <span>I see</span>
       <div class="text-green-600 bg-black/5 rounded px-1 pb-1 mx-2">
-        <span>{$res}👍</span>
+        <span>{$res.up}👍</span>
       </div>
       <span>and</span>
       <div class="text-red-400 bg-black/5 rounded px-1 pb-1 mx-2">
-        <span>{$res}👎</span>
+        <span>{$res.down}👎</span>
       </div>
       <span>!</span>
     </div>

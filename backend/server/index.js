@@ -31,6 +31,13 @@ app.post("/img", (req, res) => {
   var buf = Buffer.from(data, "base64");
   fs.writeFileSync(name, buf /* callback will go here */);
   console.log("file saved");
+
+// await fetch from python
+
+  res.send({
+    up: 1,
+    down: 3
+  })
 });
 
 app.listen(port, () => {
