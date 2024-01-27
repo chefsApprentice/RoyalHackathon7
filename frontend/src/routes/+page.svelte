@@ -11,15 +11,24 @@
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
 
+  let sendData = async (data: any) => {
+    await fetch("http://localhost:3000/img", {
+      method: "POST",
+      body: data,
+    });
+  };
+
   // onMount basically means "start when the DOM is loaded"
   onMount(async () => {
     // Boilerplate code to get the video stream from the camera
 
     try {
-      videoElement.srcObject = await navigator.mediaDevices.getUserMedia({video: true});
+      videoElement.srcObject = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
       videoElement.onloadedmetadata = videoElement.play;
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
       switch (error) {
         default:
@@ -45,7 +54,8 @@
 
     // We need to send this to the backend
     const data = canvasElement.toDataURL("image/png");
-    // Send data
+    console.log("data:" + data);
+    sendData(data);
 
     console.log("A Picture has been taken!");
     // photoElement.setAttribute("src", data)
@@ -70,7 +80,11 @@
   ></canvas>
   {#if $isDone === false}
     {#if $videoError}
-      <p class="bg-red-500 shadow-lg shadow-red-500/20 text-white text-2xl p-3 m-3 rounded">{$videoError}</p>
+      <p
+        class="bg-red-500 shadow-lg shadow-red-500/20 text-white text-2xl p-3 m-3 rounded"
+      >
+        {$videoError}
+      </p>
     {:else}
       <video width={512} bind:this={videoElement}>
         <track kind="captions" src="" />
