@@ -29,18 +29,23 @@ app.get("/", (req, res) => {
 app.post("/img", (req, res) => {
   // console.log("req" + req)
   count++;
-  const name = FILES_DIR + count + ".png";
+  const name = FILES_DIR + "1.png";
   const data = req.body.image.replace(/^data:image\/\w+;base64,/, "");
   const buf = Buffer.from(data, "base64");
   fs.writeFileSync(name, buf /* callback will go here */);
   console.log("file saved");
 
   // await fetch from python
-  const python = spawn("python", ["../model.py"]);
-  let dataToSend;
+  const python = spawn("python", ["-u", "../model.py"]);
+  let dataToSend = "";
+
+  //   python.stderr.on("data", function (data) {
+  //     console.log("Pipe data from python script ...", data.toString());
+  //     dataToSend.push(data.toString());
+  //   });
 
   python.stdout.on("data", function (data) {
-    console.log("Pipe data from python script ...");
+    // console.log("Pipe data from python script ...", data.toString());
     dataToSend = data.toString();
   });
   // in close event we are sure that stream from child process is closed
@@ -48,14 +53,19 @@ app.post("/img", (req, res) => {
     console.log(`child process close all stdio with code ${code}`);
     // send data to browser
     // res.send(dataToSend);
+    let output = dataToSend[0];
+    console.log("Final data", output);
 
-    console.log("data 2 send", dataToSend);
+    if (output == "U") {
+      res.send({ up: 1, down: 0 });
+    } else if (output == "D") {
+      res.send({ up: 0, down: 1 });
+    } else {
+      res.send({ up: 0, down: 0 });
+    }
+
   });
 
-    res.send({
-      up: 3,
-      down: 1
-    })
 });
 
 // Starts express on a port
