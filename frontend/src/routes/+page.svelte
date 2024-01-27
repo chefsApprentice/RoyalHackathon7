@@ -16,11 +16,17 @@
     formData.append("image", data);
 
     await fetch("http://localhost:3000/img/", {
-      method: "POST",
-      // mode: "cors",
-      // body: data,
+      method: "POST", // GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, same-origin
+      cache: "no-cache", // default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, follow, error
+      referrer: "no-referrer", // no-referrer, client
       body: JSON.stringify({
-        image: "hi",
+        image: data,
       }),
     });
   };
@@ -53,13 +59,13 @@
       const body = document.body;
       let sway = 1;
       switch (sway) {
-        case -1:  // Majority Dislike
+        case -1: // Majority Dislike
           body.style.backgroundColor = "#ffd9d9";
           break;
         default:
-        case 0:   // Equal
+        case 0: // Equal
           break;
-        case 1:   // Majority Like
+        case 1: // Majority Like
           body.style.backgroundColor = "#cdffcd";
           break;
       }
