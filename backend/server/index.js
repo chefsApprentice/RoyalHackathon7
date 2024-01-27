@@ -37,6 +37,7 @@ app.post("/img", (req, res) => {
 
   // await fetch from python
   const python = spawn("python", ["../model.py"]);
+  let dataToSend;
 
   python.stdout.on("data", function (data) {
     console.log("Pipe data from python script ...");
@@ -46,13 +47,15 @@ app.post("/img", (req, res) => {
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
     // send data to browser
-    res.send(dataToSend);
+    // res.send(dataToSend);
+
+    console.log("data 2 send", dataToSend);
   });
 
-  //   res.send({
-  //     up: 3,
-  //     down: 1
-  //   })
+    res.send({
+      up: 3,
+      down: 1
+    })
 });
 
 // Starts express on a port
