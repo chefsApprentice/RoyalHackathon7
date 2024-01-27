@@ -15,10 +15,13 @@
     let formData = new FormData();
     formData.append("image", data);
 
-    await fetch("http://localhost:3000/img", {
+    await fetch("http://localhost:3000/img/", {
       method: "POST",
-      mode: "cors",
-      body: formData,
+      // mode: "cors",
+      // body: data,
+      body: JSON.stringify({
+        image: "hi",
+      }),
     });
   };
 
@@ -58,7 +61,7 @@
 
     // We need to send this to the backend
     const data = canvasElement.toDataURL("image/png");
-    console.log("data:" + data);
+    // console.log("data:" + data);
     sendData(data);
 
     console.log("A Picture has been taken!");
