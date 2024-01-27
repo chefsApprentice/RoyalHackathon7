@@ -24,3 +24,4 @@ project_folder=r'C:\Users\quinb\Desktop\Thumbs_up_and_down_Dataset'
 read = pd.read_csv(r'C:\Users\quinb\Desktop\Thumbs_up_and_down_Dataset\train.csv',dtype=object)
 print(read.shape) #shape of a DataFrame is a tuple ( no of rows, no of columns)
 print(read.info())
+#rrrr
