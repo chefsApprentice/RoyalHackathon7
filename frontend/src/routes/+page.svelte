@@ -11,10 +11,14 @@
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
 
-  let sendData = async (data: any) => {
+  let sendData = async (data: string) => {
+    let formData = new FormData();
+    formData.append("image", data);
+
     await fetch("http://localhost:3000/img", {
       method: "POST",
-      body: data,
+      mode: "cors",
+      body: formData,
     });
   };
 
