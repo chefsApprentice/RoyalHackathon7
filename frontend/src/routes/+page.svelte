@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import RedText from "$lib/RedText.svelte";
 
     console.log("Royal Hackaway");
 
@@ -17,18 +18,7 @@
 </script>
 
 <div>
-    <p>Royal Hackaway</p>
-    <p>Royal Hackaway</p>
-    <p>Royal Hackaway</p>
-    <p>Royal Hackaway</p>
-    <p>Royal Hackaway</p>
-    <p>Royal Hackaway</p>
+    <RedText/>
 </div>
 
-<video bind:this={videoElement}/>
-
-<style>
-    p {
-        color: red;
-    }
-</style>
+<video width={512} bind:this={videoElement}/>
