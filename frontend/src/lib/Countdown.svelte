@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade } from "svelte/transition";
+
   export let isDone = false;
 
   let countDownNum: number | undefined;
@@ -28,11 +30,13 @@
   </button>
 
   {#if !Number.isNaN(countDownNum) && countDownNum != undefined}
-    <div
-      id="countBubble"
-      class="m-10 p-5 bg-gray-300 w-min font-bold rounded-full text-white text-lg"
-    >
-      <p>{countDownNum}</p>
+    <div transition:fade>
+      <div
+        id="countBubble"
+        class="m-10 p-5 bg-gray-300 w-min font-bold rounded-full text-white text-lg"
+      >
+        <p>{countDownNum}</p>
+      </div>
     </div>
   {/if}
 </div>

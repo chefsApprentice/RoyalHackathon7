@@ -22,6 +22,9 @@
       .catch(console.error);
   });
 
+  let res = writable(0);
+  let resRecieved = writable(false);
+
   const takePicture = () => {
     const context = canvasElement.getContext("2d")!;
     context.drawImage(
@@ -34,10 +37,12 @@
 
     // We need to send this to the backend
     const data = canvasElement.toDataURL("image/png");
+    // Send data
 
     console.log("A Picture has been taken!");
     // photoElement.setAttribute("src", data)
   };
+
   let isDone = writable(false);
 
   isDone.subscribe((done) => {
@@ -46,10 +51,6 @@
     }
   });
 </script>
-
-<div>
-  <Result />
-</div>
 
 <div class="flex flex-col w-full h-full items-center justify-center">
   <canvas
@@ -64,9 +65,12 @@
     </video>
     <br />
     <Countdown bind:isDone={$isDone} />
-  {:else}
+  {:else if $resRecieved == false}
     <p class="font-bold text-4xl p-2">Picture has been sent!</p>
+    <Result bind:resRecieved={$resRecieved} bind:res={$res} />
+  {:else}
+    <p class="font-bold text-4xl p-2">
+      You have {$res} thumbs up!
+    </p>
   {/if}
 </div>
-
-<Countdown bind:isDone={$isDone} />
