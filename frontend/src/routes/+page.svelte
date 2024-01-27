@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import Result from "$lib/Result.svelte";
+  // import Result from "$lib/Result.svelte";
   import Countdown from "$lib/Countdown.svelte";
   import { writable } from "svelte/store";
   import { fade } from "svelte/transition";
@@ -11,11 +11,13 @@
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
 
+  let predictionResult: Promise<Response> | undefined;
+
   let sendData = async (data: string) => {
     let formData = new FormData();
     formData.append("image", data);
 
-    let success = await fetch("http://localhost:3000/img/", {
+    let predictionResult = await fetch("http://localhost:3000/img/", {
       method: "POST", // GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, same-origin
       cache: "no-cache", // default, no-cache, reload, force-cache, only-if-cached
@@ -29,13 +31,13 @@
         image: data,
       }),
     });
-    let dataRecieved = await success.json();
+    let dataRecieved = await predictionResult.json();
 
     if (dataRecieved != undefined) {
       resRecieved = writable(true);
       console.log(dataRecieved);
       // let dataRecieved = JSON.stringify(success.body);
-      res = { up: 0, down: 0 };
+      res = writable({ up: dataRecieved.up, down: dataRecieved.down });
     }
   };
 
@@ -135,18 +137,24 @@
     {/if}
   {:else if $resRecieved === false}
     <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
-    <Result bind:resRecieved={$resRecieved} bind:res={$res} />
-  {:else}
-    <div transition:fade class="flex font-bold text-3xl py-5">
-      <span>I see</span>
-      <div class="text-green-600 bg-black/5 rounded px-1 pb-1 mx-2">
-        <span>{$res.up}👍</span>
+    <!-- <Result bind:resRecieved={$resRecieved} bind:res={$res} /> -->
+    <!--{:else}-->
+    {#await predictionResult}
+      <p class="animate-pulse">Predicting...</p>
+    {:then response}
+      <div transition:fade class="flex font-bold text-3xl py-2">
+        <span>I see</span>
+        <div class="text-green-600 bg-black/5 rounded px-1 pb-1 mx-2">
+          <span>{response.up}👍</span>
+        </div>
+        <span>and</span>
+        <div class="text-red-400 bg-black/5 rounded px-1 pb-1 mx-2">
+          <span>{response.down}👎</span>
+        </div>
+        <span>!</span>
       </div>
-      <span>and</span>
-      <div class="text-red-400 bg-black/5 rounded px-1 pb-1 mx-2">
-        <span>{$res.down}👎</span>
-      </div>
-      <span>!</span>
-    </div>
+    {:catch error}
+      <p>Something went wrong!</p>
+    {/await}
   {/if}
 </div>

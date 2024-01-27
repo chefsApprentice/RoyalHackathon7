@@ -35,8 +35,8 @@ app.post("/img", (req, res) => {
 // await fetch from python
 
   res.send({
-    up: 1,
-    down: 3
+    up: 3,
+    down: 1
   })
 });
 
