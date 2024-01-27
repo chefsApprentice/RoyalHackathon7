@@ -11,13 +11,11 @@
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
 
-  let predictionResult: Promise<Response> | undefined;
-
   let sendData = async (data: string) => {
     let formData = new FormData();
     formData.append("image", data);
 
-    let predictionResult = await fetch("http://localhost:3000/img/", {
+    let response = await fetch("http://localhost:3000/img/", {
       method: "POST", // GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, same-origin
       cache: "no-cache", // default, no-cache, reload, force-cache, only-if-cached
@@ -31,13 +29,13 @@
         image: data,
       }),
     });
-    let dataRecieved = await predictionResult.json();
+    let dataRecieved = await response.json();
 
     if (dataRecieved != undefined) {
       resRecieved = writable(true);
       console.log(dataRecieved);
       // let dataRecieved = JSON.stringify(success.body);
-      res = writable({ up: dataRecieved.up, down: dataRecieved.down });
+      res.set(dataRecieved);
     }
   };
 
@@ -138,8 +136,8 @@
   {:else if $resRecieved === false}
     <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
     <!-- <Result bind:resRecieved={$resRecieved} bind:res={$res} /> -->
-    <!--{:else}-->
-    {#await predictionResult}
+  {:else}
+    {#await $res}
       <p class="animate-pulse">Predicting...</p>
     {:then response}
       <div transition:fade class="flex font-bold text-3xl py-2">
