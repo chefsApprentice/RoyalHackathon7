@@ -50,3 +50,4 @@
     <track kind="captions" src=""/>
 </video>
 <canvas width={256} height={200} bind:this={canvasElement}></canvas>
+
