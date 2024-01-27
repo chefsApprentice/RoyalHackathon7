@@ -12,15 +12,22 @@
   // let photoElement: HTMLImageElement;
 
   // onMount basically means "start when the DOM is loaded"
-  onMount(() => {
+  onMount(async () => {
     // Boilerplate code to get the video stream from the camera
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        videoElement.srcObject = stream;
-        videoElement.onloadedmetadata = videoElement.play;
-      })
-      .catch(console.error);
+
+    try {
+      videoElement.srcObject = await navigator.mediaDevices.getUserMedia({video: true});
+      videoElement.onloadedmetadata = videoElement.play;
+    } catch (error) {
+      console.error(error)
+
+      switch (error) {
+        default:
+        case "DOMException: Permission denied":
+          videoError.set("Please enable webcam permissions on this site!");
+          break;
+      }
+    }
   });
 
   let res = writable(0);
@@ -45,6 +52,7 @@
   };
 
   let isDone = writable(false);
+  let videoError = writable("");
 
   isDone.subscribe((done) => {
     if (done) {
@@ -61,11 +69,15 @@
     bind:this={canvasElement}
   ></canvas>
   {#if $isDone === false}
-    <video width={512} bind:this={videoElement}>
-      <track kind="captions" src="" />
-    </video>
-    <br />
-    <Countdown bind:isDone={$isDone} />
+    {#if $videoError}
+      <p class="bg-red-500 shadow-lg shadow-red-500/20 text-white text-2xl p-3 m-3 rounded">{$videoError}</p>
+    {:else}
+      <video width={512} bind:this={videoElement}>
+        <track kind="captions" src="" />
+      </video>
+      <br />
+      <Countdown bind:isDone={$isDone} />
+    {/if}
   {:else if $resRecieved == false}
     <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
     <Result bind:resRecieved={$resRecieved} bind:res={$res} />
