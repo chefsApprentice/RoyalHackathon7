@@ -33,7 +33,7 @@
     <div transition:fade>
       <div
         id="countBubble"
-        class="m-10 p-5 bg-gray-300 w-min font-bold rounded-full text-white text-lg"
+        class="m-10 p-5 bg-gray-300 w-min font-bold rounded-xl text-black text-5xl"
       >
         <p>{countDownNum}</p>
       </div>

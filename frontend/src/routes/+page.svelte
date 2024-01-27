@@ -44,6 +44,26 @@
           break;
       }
     }
+
+    resRecieved.subscribe((recieved) => {
+      // TODO: Change the background colour based on the result
+      // Right now the output json isn't final
+      if (!recieved) return;
+
+      const body = document.body;
+      let sway = 1;
+      switch (sway) {
+        case -1:  // Majority Dislike
+          body.style.backgroundColor = "#ffd9d9";
+          break;
+        default:
+        case 0:   // Equal
+          break;
+        case 1:   // Majority Like
+          body.style.backgroundColor = "#cdffcd";
+          break;
+      }
+    });
   });
 
   let res = writable(0);
@@ -99,12 +119,20 @@
       <br />
       <Countdown bind:isDone={$isDone} />
     {/if}
-  {:else if $resRecieved == false}
+  {:else if $resRecieved === false}
     <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
     <Result bind:resRecieved={$resRecieved} bind:res={$res} />
   {:else}
-    <p transition:fade class="font-bold text-4xl p-2">
-      You have {$res} thumbs up!
-    </p>
+    <div transition:fade class="flex font-bold text-3xl py-2">
+      <span>I see</span>
+      <div class="text-green-600 bg-black/5 rounded px-1 pb-1 mx-2">
+        <span>{$res}👍</span>
+      </div>
+      <span>and</span>
+      <div class="text-red-400 bg-black/5 rounded px-1 pb-1 mx-2">
+        <span>{$res}👎</span>
+      </div>
+      <span>!</span>
+    </div>
   {/if}
 </div>
