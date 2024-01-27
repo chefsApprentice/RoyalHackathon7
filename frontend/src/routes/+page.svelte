@@ -3,6 +3,7 @@
     import Result from "$lib/Result.svelte";
   import Countdown from "$lib/Countdown.svelte";
     import { writable } from "svelte/store";
+    import { fade } from "svelte/transition";
 
     console.log("Royal Hackaway");
 
@@ -53,7 +54,7 @@
         <br>
         <Countdown bind:isDone={$isDone} />
     {:else}
-        <p class="font-bold text-4xl p-2">Picture has been sent!</p>
+        <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
     {/if}
 </div>
 
