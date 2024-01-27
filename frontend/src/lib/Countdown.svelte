@@ -4,36 +4,36 @@
     let countDownNum: number | undefined ;
    
     function timer () : null{
-        setInterval(updateCount, 1000);
+        isDone = false;
+        if (countDownNum == undefined ) countDownNum = 3;
+        setTimeout(updateCount, 1000);
         return null;
     }
 
     let updateCount = () => {
-
-        if (countDownNum == undefined) countDownNum = 4;
-
-        if (countDownNum! == 0) {
-            isDone = true;
-            countDownNum = undefined;
-        } else if (countDownNum != undefined) {
-            countDownNum -= 1;
-        }
-
-    
+        if (countDownNum! != 0) { countDownNum! -= 1;  
+        setTimeout(updateCount, 1000);  }
+        else { countDownNum = undefined; return;}
     }
 
 </script>
 
 <div>
-    <button on:click={timer()}>
+    <button on:click={() => timer()}>
         Start countdown 
     </button>
 
-    <p style = {(countDownNum == undefined  || countDownNum > 4 ? "visibility:hidden" : "visibility:visible")}>
-        {countDownNum}
-    </p>
+    <div id = "countBubble"  class=" p-5; bg-green-300;">
+        {#if !Number.isNaN(countDownNum) && countDownNum != undefined}
+            <p> {countDownNum} </p>
+        {/if}
+       
+    </div>
+
 </div>
 
 <style>
+    #countBubble {
 
+    }
 </style>
