@@ -9,6 +9,11 @@
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
 
+  let peopleInputed = writable(false);
+  // let setPeopleInputed = () => {
+  //   peopleInputed = writable(true);
+  // };
+
   let sendData = async (data: string) => {
     let formData = new FormData();
     formData.append("image", data);
@@ -30,6 +35,19 @@
     });
     // var that qaits the req's response
     let dataRecieved = await response.json();
+
+    let total = 0;
+    total += dataRecieved.up;
+    total += dataRecieved.down;
+    let subtraction = people - total;
+    if (subtraction < 0 && dataRecieved.down == 0) {
+      dataRecieved.down += subtraction;
+    } else if (dataRecieved.down < 0) {
+      dataRecieved.up += dataRecieved.down;
+      dataRecieved.down = 0;
+    } else {
+      dataRecieved.up += subtraction;
+    }
 
     // Checks recieved data, updates data to match
     if (dataRecieved != undefined) {
@@ -87,6 +105,7 @@
   // Defines res (the thumbs up score)
   let res = writable({ up: 0, down: 0 });
   let resRecieved = writable(false);
+  let people = 0;
 
   const takePicture = () => {
     const context = canvasElement.getContext("2d")!;
@@ -138,7 +157,15 @@
         {$videoError}
       </p>
     {:else}
-      <Countdown bind:isDone={$isDone} />
+      {#if !$peopleInputed}
+        <form on:submit|preventDefault>
+          <input type="number" min="0" bind:value={people} />
+          <button type="submit" on:click={() => peopleInputed.set(true)} />
+        </form>
+      {:else}
+        <Countdown bind:isDone={$isDone} />
+      {/if}
+
       <video width={512} bind:this={videoElement}>
         <track kind="captions" src="" />
       </video>

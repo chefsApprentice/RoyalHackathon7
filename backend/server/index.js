@@ -36,13 +36,13 @@ app.post("/img", (req, res) => {
   console.log("file saved");
 
   // await fetch from python
-  const python = spawn("python", ["-u", "../model3.py"]);
+  const python = spawn("python", ["-u", "../model4.py"]);
   let dataToSend = [];
 
-  // python.stderr.on("data", function (data) {
-  //   console.log("Pipe data from python script ...", data.toString());
-  //   dataToSend.push(data.toString());
-  // });
+  python.stderr.on("data", function (data) {
+    console.log("Pipe data from python script ...", data.toString());
+    dataToSend.push(data.toString());
+  });
 
   python.stdout.on("data", function (data) {
     // console.log("Pipe data from python script ...", data.toString());
@@ -56,30 +56,12 @@ app.post("/img", (req, res) => {
     // res.send(dataToSend);
 
     // console.log("d2s", dataToSend);
+    console.log("d2s", dataToSend)
     let output = dataToSend.at(-1).trim();
-    // console.log("output", output);
-    // console.log("output equal", output === "Down")
+    console.log("out", output)
+    let json = JSON.parse(output);
+    res.send({ up: json[0], down: json[1] });
 
-    switch (output) {
-      case "Up":
-        res.send({ up: 1, down: 0 });
-        break
-
-      case "Down":
-        res.send({ up: 0, down: 1 });
-        break
-
-      default:
-        res.send({ up: 0, down: 0 });
-        break
-    }
-    // if (output == "Up") {
-    //   res.send({ up: 1, down: 0 });
-    // } else if (dataToSend == "Down") {
-    //   res.send({ up: 0, down: 1 });
-    // } else {
-    //   res.send({ up: 0, down: 0 });
-    // }
   });
 });
 

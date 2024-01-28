@@ -13,7 +13,7 @@ for result in results:
     keypoints = result.keypoints  # Keypoints object for pose outputs
     probs = result.probs  # Probs object for classification outputs
 
-finalnum = []
+finalnum = [0, 0]
 
 for r in boxes:
     # Get the class IDs tensor for this result
@@ -78,9 +78,9 @@ for r in boxes:
         # Print prediction and confidence score
         # print("Confidence Score:" , confidence_score)
         # print(" ")
-        class_name_var = (class_name[2:], end="")
+        class_name_var = class_name[2:]
         if "Up" in class_name_var:
-                finalnum[0] += 1
-        else:
-                finalnum[1] += 1
-print(finalnum)       
+            finalnum[0] += 1
+        elif "Down" in class_name_var:
+            finalnum[1] += 1
+print(finalnum)
