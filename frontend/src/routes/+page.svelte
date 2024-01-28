@@ -48,7 +48,7 @@
 
     try {
       videoElement.srcObject = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {aspectRatio: 1},
       });
       videoElement.onloadedmetadata = videoElement.play;
     } catch (error) {
@@ -122,11 +122,17 @@
     <p>Get a group and put your thumbs up and down to vote!</p>
   </div>
 
+<!--  <canvas-->
+<!--    style:display={$isDone ? "block" : "none"}-->
+<!--    width={512}-->
+<!--    height={390}-->
+<!--    bind:this={canvasElement}-->
+<!--  ></canvas>-->
   <canvas
-    style:display={$isDone ? "block" : "none"}
-    width={512}
-    height={390}
-    bind:this={canvasElement}
+          style:display={$isDone ? "block" : "none"}
+          width={512}
+          height={512}
+          bind:this={canvasElement}
   ></canvas>
   {#if $isDone === false}
     {#if $videoError}
