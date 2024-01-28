@@ -4,7 +4,7 @@ import numpy as np
 
 from ultralytics import YOLO
 model = YOLO('yolov8n.pt')
-source = r"C:\Users\Rahul\Desktop\pexels-jopwell-2422290.jpg"
+source = r"..\images\1.png"
 results = model(source)  # list of Results objects
 # Process results list
 for result in results:
