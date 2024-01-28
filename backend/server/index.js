@@ -57,22 +57,23 @@ app.post("/img", (req, res) => {
 
     // console.log("d2s", dataToSend);
     let output = dataToSend.at(-1).trim();
+    let json = JSON.parse(output);
     // console.log("output", output);
     // console.log("output equal", output === "Down")
+    res.send({ up: json[0], down: json[1] });
 
-    switch (output) {
-      case "Up":
-        res.send({ up: 1, down: 0 });
-        break
-
-      case "Down":
-        res.send({ up: 0, down: 1 });
-        break
-
-      default:
-        res.send({ up: 0, down: 0 });
-        break
-    }
+    // switch (output) {
+    //   case "Up":
+    //     break
+    //
+    //   case "Down":
+    //     res.send({ up: 0, down: 1 });
+    //     break
+    //
+    //   default:
+    //     res.send({ up: 0, down: 0 });
+    //     break
+    // }
     // if (output == "Up") {
     //   res.send({ up: 1, down: 0 });
     // } else if (dataToSend == "Down") {
