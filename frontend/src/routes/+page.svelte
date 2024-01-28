@@ -3,7 +3,7 @@
   // import Result from "$lib/Result.svelte";
   import Countdown from "$lib/Countdown.svelte";
   import { writable } from "svelte/store";
-  import { fade } from "svelte/transition";
+  import { fade, fly, slide } from "svelte/transition";
 
   console.log("Royal Hackaway");
 
@@ -48,7 +48,7 @@
 
     try {
       videoElement.srcObject = await navigator.mediaDevices.getUserMedia({
-        video: {aspectRatio: 1},
+        video: { aspectRatio: 1 },
       });
       videoElement.onloadedmetadata = videoElement.play;
     } catch (error) {
@@ -122,18 +122,13 @@
     <p>Get a group and put your thumbs up and down to vote!</p>
   </div>
 
-<!--  <canvas-->
-<!--    style:display={$isDone ? "block" : "none"}-->
-<!--    width={512}-->
-<!--    height={390}-->
-<!--    bind:this={canvasElement}-->
-<!--  ></canvas>-->
-  <canvas
-          style:display={$isDone ? "block" : "none"}
-          width={512}
-          height={512}
-          bind:this={canvasElement}
-  ></canvas>
+  <!--  <canvas-->
+  <!--    style:display={$isDone ? "block" : "none"}-->
+  <!--    width={512}-->
+  <!--    height={390}-->
+  <!--    bind:this={canvasElement}-->
+  <!--  ></canvas>-->
+
   {#if $isDone === false}
     {#if $videoError}
       <p
@@ -142,20 +137,22 @@
         {$videoError}
       </p>
     {:else}
+      <Countdown bind:isDone={$isDone} />
       <video width={512} bind:this={videoElement}>
         <track kind="captions" src="" />
       </video>
       <br />
-      <Countdown bind:isDone={$isDone} />
     {/if}
   {:else if $resRecieved === false}
-    <p transition:fade class="font-bold text-4xl p-2">Picture has been sent!</p>
+    <p transition:slide class="font-bold text-xl mx-2 pb-5">
+      Picture has been sent!
+    </p>
     <!-- <Result bind:resRecieved={$resRecieved} bind:res={$res} /> -->
   {:else}
     {#await $res}
       <p class="animate-pulse">Predicting...</p>
     {:then response}
-      <div transition:fade class="flex font-bold text-3xl py-2">
+      <div transition:slide class="flex font-bold text-3xl pb-5">
         <span>I see</span>
         <div class="bg-black/5 rounded px-1 pb-1 mx-2">
           <span class="text-green-600">{response.up}👍</span>
@@ -170,4 +167,10 @@
       <p>Something went wrong!</p>
     {/await}
   {/if}
+  <canvas
+    style:display={$isDone ? "block" : "none"}
+    width={512}
+    height={512}
+    bind:this={canvasElement}
+  ></canvas>
 </div>

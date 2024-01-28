@@ -36,33 +36,34 @@ app.post("/img", (req, res) => {
   console.log("file saved");
 
   // await fetch from python
-  const python = spawn("python", ["-u", "../model.py"]);
+  const python = spawn("python", ["-u", "../model3.py"]);
   let dataToSend = "";
 
-  //   python.stderr.on("data", function (data) {
-  //     console.log("Pipe data from python script ...", data.toString());
-  //     dataToSend.push(data.toString());
-  //   });
+    python.stderr.on("data", function (data) {
+      console.log("Pipe data from python script ...", data.toString());
+      // dataToSend.push(data.toString());
+    });
 
   python.stdout.on("data", function (data) {
-    // console.log("Pipe data from python script ...", data.toString());
+    console.log("Pipe data from python script ...", data.toString());
     dataToSend = data.toString();
   });
   // in close event we are sure that stream from child process is closed
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
+
     // send data to browser
     // res.send(dataToSend);
-    let output = dataToSend[0];
-    console.log("Final data", output);
+    // let output = dataToSend[0];
+    // console.log("Final data", output);
 
-    if (output == "U") {
-      res.send({ up: 1, down: 0 });
-    } else if (output == "D") {
-      res.send({ up: 0, down: 1 });
-    } else {
-      res.send({ up: 0, down: 0 });
-    }
+    // if (output == "U") {
+    //   res.send({ up: 1, down: 0 });
+    // } else if (output == "D") {
+    //   res.send({ up: 0, down: 1 });
+    // } else {
+    //   res.send({ up: 0, down: 0 });
+    // }
 
   });
 
