@@ -81,6 +81,6 @@ for r in boxes:
         class_name_var = class_name[2:]
         if "Up" in class_name_var:
             finalnum[0] += 1
-        else:
+        elif "Down" in class_name_var:
             finalnum[1] += 1
-print(finalnum)       
+print(finalnum)
