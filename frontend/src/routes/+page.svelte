@@ -169,8 +169,8 @@
   {/if}
   <canvas
     style:display={$isDone ? "block" : "none"}
-    width={512}
-    height={512}
+    width={360}
+    height={360}
     bind:this={canvasElement}
   ></canvas>
 </div>

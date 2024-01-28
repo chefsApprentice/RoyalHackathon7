@@ -39,10 +39,10 @@ app.post("/img", (req, res) => {
   const python = spawn("python", ["-u", "../model3.py"]);
   let dataToSend = "";
 
-    python.stderr.on("data", function (data) {
-      console.log("Pipe data from python script ...", data.toString());
-      // dataToSend.push(data.toString());
-    });
+    // python.stderr.on("data", function (data) {
+    //   console.log("Pipe data from python script ...", data.toString());
+    //   // dataToSend.push(data.toString());
+    // });
 
   python.stdout.on("data", function (data) {
     console.log("Pipe data from python script ...", data.toString());
@@ -54,16 +54,14 @@ app.post("/img", (req, res) => {
 
     // send data to browser
     // res.send(dataToSend);
-    // let output = dataToSend[0];
-    // console.log("Final data", output);
 
-    // if (output == "U") {
-    //   res.send({ up: 1, down: 0 });
-    // } else if (output == "D") {
-    //   res.send({ up: 0, down: 1 });
-    // } else {
-    //   res.send({ up: 0, down: 0 });
-    // }
+    if (dataToSend == "Up") {
+      res.send({ up: 1, down: 0 });
+    } else if (dataToSend == "Down") {
+      res.send({ up: 0, down: 1 });
+    } else {
+      res.send({ up: 0, down: 0 });
+    }
 
   });
 
