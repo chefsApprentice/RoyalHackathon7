@@ -17,7 +17,6 @@
   // recursive loop for countdown
   let updateCount = () => {
     if (countDownNum! > 1) {
-      console.log("hit");
       countDownNum! -= 1;
       setTimeout(updateCount, 1000);
     } else {

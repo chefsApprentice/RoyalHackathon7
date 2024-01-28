@@ -35,6 +35,7 @@
     });
     // var that qaits the req's response
     let dataRecieved = await response.json();
+    console.log(dataRecieved);
 
     let total = 0;
     total += dataRecieved.up;
@@ -48,6 +49,7 @@
     } else {
       dataRecieved.up += subtraction;
     }
+    console.log("modified", dataRecieved);
 
     // Checks recieved data, updates data to match
     if (dataRecieved != undefined) {
@@ -159,7 +161,7 @@
     {:else}
       {#if !$peopleInputed}
         <form on:submit|preventDefault>
-          <input type="number" min="0" bind:value={people} />
+          <input type="number" min="0" class="" bind:value={people} />
           <button type="submit" on:click={() => peopleInputed.set(true)} />
         </form>
       {:else}
