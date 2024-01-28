@@ -41,7 +41,7 @@ app.post("/img", (req, res) => {
 
   // python.stderr.on("data", function (data) {
   //   console.log("Pipe data from python script ...", data.toString());
-    // dataToSend.push(data.toString());
+  //   dataToSend.push(data.toString());
   // });
 
   python.stdout.on("data", function (data) {
@@ -55,19 +55,31 @@ app.post("/img", (req, res) => {
     // send data to browser
     // res.send(dataToSend);
 
-    console.log("d2s", dataToSend);
-    let output = dataToSend[dataToSend.length - 1];
-    output.replace("\r\n", "");
-    console.log("output", output);
-    console.log("output equal", output == "Down")
+    // console.log("d2s", dataToSend);
+    let output = dataToSend.at(-1).trim();
+    // console.log("output", output);
+    // console.log("output equal", output === "Down")
 
-    if (output == "Up") {
-      res.send({ up: 1, down: 0 });
-    } else if (dataToSend == "Down") {
-      res.send({ up: 0, down: 1 });
-    } else {
-      res.send({ up: 0, down: 0 });
+    switch (output) {
+      case "Up":
+        res.send({ up: 1, down: 0 });
+        break
+
+      case "Down":
+        res.send({ up: 0, down: 1 });
+        break
+
+      default:
+        res.send({ up: 0, down: 0 });
+        break
     }
+    // if (output == "Up") {
+    //   res.send({ up: 1, down: 0 });
+    // } else if (dataToSend == "Down") {
+    //   res.send({ up: 0, down: 1 });
+    // } else {
+    //   res.send({ up: 0, down: 0 });
+    // }
   });
 });
 

@@ -5,8 +5,6 @@
   import { writable } from "svelte/store";
   import { fade, fly, slide } from "svelte/transition";
 
-  console.log("Royal Hackaway");
-
   let videoElement: HTMLVideoElement;
   let canvasElement: HTMLCanvasElement;
   // let photoElement: HTMLImageElement;
