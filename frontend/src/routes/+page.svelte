@@ -33,10 +33,10 @@
 
     // Checks recieved data, updates data to match
     if (dataRecieved != undefined) {
-      resRecieved = writable(true);
       console.log(dataRecieved);
       // let dataRecieved = JSON.stringify(success.body);
       res.set(dataRecieved);
+      resRecieved.set(true);
     }
   };
 
@@ -60,22 +60,25 @@
       }
     }
 
-    resRecieved.subscribe((recieved) => {
-      // TODO: Change the background colour based on the result
-      // Right now the output json isn't final
+    resRecieved.subscribe((recieved: boolean) => {
       if (!recieved) return;
 
       const body = document.body;
-      let sway = 1;
+      let sway = Math.sign($res.up - $res.down);
+
       switch (sway) {
         case -1: // Majority Dislike
-          body.style.backgroundColor = "#ffd9d9";
+          // body.style.backgroundColor = "#ffd9d9";
+          body.style.backgroundColor = "#3a0000";
           break;
+
         default:
         case 0: // Equal
           break;
+
         case 1: // Majority Like
-          body.style.backgroundColor = "#cdffcd";
+          // body.style.backgroundColor = "#cdffcd";
+          body.style.backgroundColor = "#002f00";
           break;
       }
     });
@@ -100,7 +103,7 @@
     // console.log("data:" + data);
     sendData(data);
 
-    console.log("A Picture has been taken!");
+    console.log("Uploading image to server...");
     // photoElement.setAttribute("src", data)
   };
 
@@ -142,8 +145,8 @@
       <br />
     {/if}
   {:else if $resRecieved === false}
-    <p transition:slide class="font-bold text-xl mx-2 pb-5">
-      Picture has been sent!
+    <p transition:slide class="font-bold text-xl mx-2 pb-5 animate-pulse">
+      Processing picture...
     </p>
     <!-- <Result bind:resRecieved={$resRecieved} bind:res={$res} /> -->
   {:else}
