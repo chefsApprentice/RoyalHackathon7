@@ -36,12 +36,12 @@ app.post("/img", (req, res) => {
   console.log("file saved");
 
   // await fetch from python
-  const python = spawn("python", ["-u", "../model3.py"]);
+  const python = spawn("python", ["-u", "../model4.py"]);
   let dataToSend = [];
 
-  // python.stderr.on("data", function (data) {
+  //python.stderr.on("data", function (data) {
   //   console.log("Pipe data from python script ...", data.toString());
-    // dataToSend.push(data.toString());
+  // dataToSend.push(data.toString());
   // });
 
   python.stdout.on("data", function (data) {
